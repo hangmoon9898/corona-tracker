@@ -4,7 +4,6 @@ import CountUp from 'react-countup'
 import styles from './SingleCard.module.css'
 import cx from 'classnames'
 
-
 const SingleCard = (props) => {
     return (
         <Grid item xs={12} md={3} component={Card} className={cx(styles.card, props.className)}>
