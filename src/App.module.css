@@ -9,16 +9,12 @@ body {
   }
   
   .image {
-    width: 370px;
-    margin-top: 50px;
+    width: 300px;
+    margin-top: 15px;
   }
   
   @media only screen and (max-width: 770px) {
     .container {
       margin: 0 10%;
-    }
-  
-    .image {
-      width: 100%;
     }
   }
