@@ -3,7 +3,7 @@ import { fetchDailyData } from "../../api";
 import { Line, Bar } from "react-chartjs-2";
 import styles from "./Chart.module.css";
 
-const Chart = ({ data: { confirmed, recovered, deaths, active }, country }) => {
+const Chart = ({ data: { confirmed, deaths, active }, country }) => {
   const [dailyData, setDailyData] = useState([]);
   useEffect(() => {
     const fetchAPI = async () => {
@@ -38,21 +38,19 @@ const Chart = ({ data: { confirmed, recovered, deaths, active }, country }) => {
   const barChart = confirmed ? (
     <Bar
       data={{
-        labels: ["Infected", "Recovered", "Active", "Deaths"],
+        labels: ["Infected", "Active", "Deaths"],
         datasets: [
           {
             label: "People",
             backgroundColor: [
               "rgba(0, 0, 255, 0.5)",
-              "rgba(0, 255, 0, 0.5)",
               "rgba(255, 153, 0, 0.8)",
               "rgba(255, 0, 0, 0.5)",
             ],
             data: [
-              confirmed.value,
-              recovered.value,
-              active.value,
-              deaths.value,
+              confirmed,
+              active,
+              deaths,
             ],
           },
         ],

@@ -20,13 +20,13 @@ const SingleCard = (props) => {
         <Typography variant="h5">
           <CountUp
             start={0}
-            end={props.number.value}
+            end={props.number}
             duration={2}
             separator=" "
           />
         </Typography>
         <Typography color="textSecondary" gutterBottom>
-          {new Date(props.lastUpdate).toDateString()}
+          {new Date(props.lastChecked).toDateString()}
         </Typography>
       </CardContent>
     </Grid>

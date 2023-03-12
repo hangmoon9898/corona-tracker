@@ -4,7 +4,7 @@ import styles from "./Card.module.css";
 import SingleCard from "./components/SingleCard";
 
 const Cards = ({
-  data: { confirmed, recovered, deaths, lastUpdate, active },
+  data: { confirmed, deaths, lastChecked, active },
 }) => {
   if (!confirmed) {
     return "Loading..";
@@ -17,25 +17,19 @@ const Cards = ({
           className={styles.infected}
           title="Infected"
           number={confirmed}
-          lastUpdate={lastUpdate}
-        />
-        <SingleCard
-          className={styles.recovered}
-          title="Recovered"
-          number={recovered}
-          lastUpdate={lastUpdate}
+          lastChecked={lastChecked}
         />
         <SingleCard
           className={styles.active}
           title="Active"
           number={active}
-          lastUpdate={lastUpdate}
+          lastChecked={lastChecked}
         />
         <SingleCard
           className={styles.deaths}
           title="Deaths"
           number={deaths}
-          lastUpdate={lastUpdate}
+          lastChecked={lastChecked}
         />
       </Grid>
     </div>

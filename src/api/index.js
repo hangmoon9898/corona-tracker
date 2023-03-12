@@ -1,30 +1,33 @@
 import axios from "axios";
 
-const url = "https://covid19.mathdro.id/api";
+const baseUrl = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/";
+const options = {
+  headers: {
+    'X-RapidAPI-Key': 'c2d2986792msh0e33471291a27cdp11b909jsnfadbf6ee851f',
+    'X-RapidAPI-Host': 'covid-19-coronavirus-statistics.p.rapidapi.com'
+  }
+}
 
 export const fetchData = async (country) => {
-  let changeableUrl = url;
-
-  if (country) {
-    changeableUrl = `${url}/countries/${country}`;
-  }
+  const optionsWithParam  = {...options, params: { country },}
 
   try {
-    const {
+    const { data: {
       data: {
         confirmed,
         recovered,
         deaths,
-        lastUpdate,
-        active = { value: confirmed.value - (recovered.value + deaths.value) },
+        lastChecked,
+        active = confirmed - (recovered  + deaths),
       },
-    } = await axios.get(changeableUrl);
+    }
+    } = await axios.get(`${baseUrl}total`, optionsWithParam );
 
     return {
       confirmed,
       recovered,
       deaths,
-      lastUpdate,
+      lastChecked,
       active,
     };
   } catch (error) {
@@ -34,11 +37,11 @@ export const fetchData = async (country) => {
 
 export const fetchDailyData = async () => {
   try {
-    const { data } = await axios.get(`${url}/daily`);
-    const modifiedData = data.map((dailyData) => ({
-      confirmed: dailyData.confirmed.total,
-      deaths: dailyData.deaths.total,
-      date: dailyData.reportDate,
+    const { data } = await axios.get(`${baseUrl}stats`, options);
+    const modifiedData = data.data.covid19Stats.map((dailyData) => ({
+      confirmed: dailyData.confirmed,
+      deaths: dailyData.deaths,
+      date: dailyData.lastUpdate,
     }));
     return modifiedData;
   } catch (error) {
@@ -49,9 +52,9 @@ export const fetchDailyData = async () => {
 export const countries = async () => {
   try {
     const {
-      data: { countries },
-    } = await axios.get(`${url}/countries`);
-    return countries.map((country) => country.name);
+      data: { data: {covid19Stats} },
+    } = await axios.get(`${baseUrl}stats`, options);
+    return covid19Stats.map((item) => item.country);
   } catch (error) {
     console.log(error);
   }
