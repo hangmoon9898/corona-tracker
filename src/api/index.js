@@ -54,7 +54,8 @@ export const countries = async () => {
     const {
       data: { data: {covid19Stats} },
     } = await axios.get(`${baseUrl}stats`, options);
-    return covid19Stats.map((item) => item.country);
+    const rawData = covid19Stats.map((item) => item.country);
+    return [...new Set(rawData)]
   } catch (error) {
     console.log(error);
   }
